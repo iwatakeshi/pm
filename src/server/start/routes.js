@@ -25,9 +25,7 @@ Route
      */
     Route.post('/signup', 'UserController.signup');
     Route.post('/signin', 'UserController.signin');
-    Route.post('/signout', ({ request }) => ({
-      message: 'You signed out!'
-    }));
+    // Route.post('/signout', 'UserController.signout');
   
   })
   .prefix('auth');

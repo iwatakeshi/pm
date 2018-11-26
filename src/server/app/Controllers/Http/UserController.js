@@ -15,14 +15,12 @@ class UserController {
         return this.signin(...arguments);
     }
 
-    async signin({ request, auth }) {
+    async signin({ request, response, auth }) {
         const { email, password } = request.all();
         const token = await auth.attempt(email, password);
-        return token;
-    }
-
-    async signout({ request, auth }) {
-        
+        return response
+            .status(200)
+            .json(token);
     }
 }
 
