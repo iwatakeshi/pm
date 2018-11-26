@@ -1,0 +1,20 @@
+{
+  "name": "pm",
+  "version": "1.0.0",
+  "description": "Project Management App",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd src/client && npm install && cd ../../ && cd src/server && npm install",
+    "serve": "cd src/client/src && vue serve && cd ../../ && cd src/server && adonis serve --dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iwatakeshi/pm.git"
+  },
+  "author": "fluxlii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iwatakeshi/pm/issues"
+  },
+  "homepage": "https://github.com/iwatakeshi/pm#readme"
+}
