@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "install": "cd src/client && npm install && cd ../../ && cd src/server && npm install",
-    "serve": "cd src/client/src && vue serve && cd ../../ && cd src/server && adonis serve --dev"
+    "serve:client": "cd src/client/src && vue serve",
+    "serve:server": "cd src/server && adonis serve --dev",
+    "serve": "npm run serve:server & npm run serve:client"
   },
   "repository": {
     "type": "git",

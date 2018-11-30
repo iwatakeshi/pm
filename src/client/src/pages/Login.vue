@@ -1,63 +1,57 @@
 <template>
-    <div class="container center">
+  <div class="container center">
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-button" @click="mode = 0" :class="mode === 0 ? 'active' : null">Login</button>
+        <button class="tab-button" @click="mode = 1" :class="mode === 1 ? 'active' : null">Register</button>
+      </div>
 
-        <div class="card">
-        
-        <div class="tabs">
-            <button class="tab-button" @click="mode = 0" :class="mode === 0 ? 'active' : null">Login</button>
-            <button class="tab-button" @click="mode = 1" :class="mode === 1 ? 'active' : null">Register</button>
+      <hr>
+      <form class="container column center" @submit.prevent="register" v-if="mode === 1">
+        <div class="container label-group">
+          <label for="email">Email</label>
+          <input id="email" v-model="form.email">
+        </div>
+
+        <div class="container label-group">
+          <label for="username">Username</label>
+          <input id="username" v-model="form.username">
+        </div>
+
+        <div class="container label-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" v-model="form.password">
         </div>
 
         <hr>
-        <form class="container column center" @submit.prevent="register" v-if="mode === 1">
 
-            <div class="container label-group">
-                <label for="email">Email</label>
-                <input id="email" v-model="form.email">                
-            </div>
+        <button class="button-style" type="submit">Register</button>
+      </form>
 
-            <div class="container label-group">
-                <label for="username">Username</label>
-                <input id="username" v-model="form.username">
-            </div>
-
-            <div class="container label-group">
-                <label for="password">Password</label>
-                <input id="password" type="password" v-model="form.password">
-            </div>
-
-            <hr/>
-
-            <button class='button-style' type="submit">Register</button>
-
-        </form>
-
-        <form class="container column center" @submit.prevent="login" v-if="mode === 0">
-
-            <div class="container label-group">
-                <label for="email">Email</label>
-                <input id="email" v-model="form.email">
-            </div>
-
-            <div class="container label-group">
-                <label for="password">Password</label>
-                <input id="password" type="password" v-model="form.password">
-            </div>
-
-            <button class='button-style' type="submit">Login</button>
-
-        </form>
-        
+      <form class="container column center" @submit.prevent="login" v-if="mode === 0">
+        <div class="container label-group">
+          <label for="email">Email</label>
+          <input id="email" v-model="form.email">
         </div>
 
+        <div class="container label-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" v-model="form.password">
+        </div>
+
+        <button class="button-style" type="submit">Login</button>
+      </form>
     </div>
+  </div>
 </template>
 
 <script>
-module.exports = {
+import axios from "axios";
+
+export default {
   name: "Login",
   data: () => ({
-    mode: 0,    
+    mode: 0,
     form: {
       email: null,
       username: null,
@@ -65,38 +59,41 @@ module.exports = {
     }
   }),
   mounted() {
-      console.log(this.$root, this.$root.token);
+    console.log(this.$root, this.$root.token);
   },
   methods: {
-      goHome(token) {
-            this.$root.token = token;
-            localStorage.setItem('token', token);
-            this.$router.push('/');
-      },
-      login() {
-          axios.post('http://localhost:3333/auth/signin', this.form)
-            .then(res => {
-                this.goHome(res.data.token);
-            })
-            .catch(err => {
-                console.error(err);                                
-            });                                                  
-      },
-      register() {
-          axios.post('http://localhost:3333/auth/signup', this.form)
-            .then(res => {
-                this.goHome(res.data.token);
-            })
-            .catch(err => {
-                console.error(err);
-            });
-      }
+    goHome(token) {
+      console.log(token);
+      this.$root.token = token;
+      localStorage.setItem("token", token);
+      window.location = "/"
+    },
+    login() {
+      axios
+        .post("http://localhost:3333/auth/signin", this.form)
+        .then(res => {
+          this.goHome(res.data.token);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    register() {
+      axios
+        .post("http://localhost:3333/auth/signup", this.form)
+        .then(res => {
+          this.goHome(res.data.token);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
   }
 };
 </script>
 
 <style scoped>
-.container {
+/* .container {
     display: flex;                    
 }
 
@@ -141,9 +138,9 @@ form input {
 
 .tab-button.active {
     background: #eee;
-}
+} */
 
-.button-style {
+/* .button-style {
     background-color: rgb(17, 88, 116);
 	outline: none;
 	color: #fff;
@@ -151,7 +148,6 @@ form input {
 	height: 45px;
 	font-weight: normal;
 	padding: 14px 0;
-	/* text-transform: uppercase; */
 	border-color: rgb(17, 88, 120);
     width: 150px
 }
@@ -171,6 +167,5 @@ hr {
 	background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
 	background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
 	background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-}
-    
+} */
 </style>
