@@ -1,14 +1,14 @@
 <template>
-    <div></div>
+  <div>
+    <h1>Welcome!</h1>
+  </div>
 </template>
 
 <script scoped>
-
-module.exports = {
-    name: "home",
-}
+export default {
+  name: "home"
+};
 </script>
 
 <style>
-
 </style>
