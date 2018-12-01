@@ -1,50 +1,57 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import 'bulma';
-import axios from 'axios';
+import 'bulma'
+import axios from 'axios'
+import Authenticator from './core/auth/Authenticatior'
 
+// App
 import App from './App.vue'
-
-Vue.config.productionTip = false
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
 // Pages
 import Home from './pages/Home';
-import Login from './pages/Login';
+import Auth from './pages/Auth';
 import Projects from './pages/Projects';
+
 // Add Vue Router
 Vue.use(VueRouter);
 
+// Configure routes
 const routes = [
   { path: '/', component: Home },
-  { path: '/login', component: Login },
+  { path: '/signin', component: Auth },
+  { path: '/signup', component: Auth },
   { path: '/projects', component: Projects }
 ]
 
 const router = new VueRouter({ routes })
 
+// Configurations
+Vue.config.productionTip = false
+axios.defaults.baseURL = 'http://localhost:3333/'
 
-new Vue({
+const auth = new Authenticator();
+
+
+const app = new Vue({
   render: h => h(App),
   router,
   data: () => ({
-    token: null
+    path: window.location.hash.replace('#', ''),
+    route: window.location.pathname,
   }),
-  beforeMount() {
-    this.checkLogin();
-  },
-  mounted() {
-    
-  },
   methods: {
-    isLoggedIn() {
-      return this.token !== null;
-    },
-    checkLogin() {
-      if (!this.token && !window.localStorage.getItem('token')) this.$router.push("/login");
-      else {
-        this.token = localStorage.getItem('token');
-      }
+    auth() {
+      return auth;
     }
   }
-}).$mount('#app')
+});
+
+// Watch for path and route changes
+// https://github.com/vuejs/vue-router/issues/1807
+router.beforeEach((to, from, next) => {
+  app.path = to.path;
+  app.route = to.fullPath;
+  next();
+})
+
+app.$mount('#app')

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import navbar from './components/Navbar'
+import navbar from './components/common/Navbar'
 
 export default {
   name: "app",
@@ -18,8 +18,6 @@ export default {
   beforeMount() {
     
   },
-  methods: {
-  }
 };
 </script>
 
