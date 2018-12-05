@@ -17,9 +17,12 @@ export default {
   methods: {
     createProject: function() {
       axios
-        .post("api/v1/projects", this.project)
-        .then(response => console.log(response));
-      window.location.reload(true);
+        .post("api/v1/projects", this.project) 
+        .then(response => {
+          this.$parent.$emit('NewProjectSaved', response.data);
+          this.project.title = '';
+        });
+      // window.location.reload(true);
     }
   }
 };

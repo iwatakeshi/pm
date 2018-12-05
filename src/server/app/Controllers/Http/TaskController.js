@@ -71,7 +71,7 @@ class TaskController {
 
       if (ProjectValidator.isValidOwner(project, user)) {
         const task = new Task();
-        task.fill({ description });
+        task.fill({ description, completed: false });
 
         await project.tasks().save(task);
         return response.status(200)
@@ -170,15 +170,16 @@ class TaskController {
     // Get the user
     const user = await auth.getUser();
     // Get the project id from URL.
-    const { project_id, task_id } = params;
+    // const { project_id, task_id } = params;
+    const { task_id } = params;
 
     // Find the project using the project id.
-    const project = await Project.find(project_id);
+    // const project = await Project.find(project_id);
 
     // Make sure the project exists
-    if (ProjectValidator.exists(project)) {
-      // Make sure that the user owns the project
-      if (ProjectValidator.isValidOwner(project, user)) {
+    // if (ProjectValidator.exists(project)) {
+    //   // Make sure that the user owns the project
+    //   if (ProjectValidator.isValidOwner(project, user)) {
 
         // Get the task
         const task = await Task.find(task_id);
@@ -186,7 +187,7 @@ class TaskController {
         if (TaskValidator.exists(task)) {
 
           // Make sure that the project owns the task
-          if (TaskValidator.isValidProject(task, project)) {
+          // if (TaskValidator.isValidProject(task, project)) {
 
             // Update the description
             task.merge(request.only(['description', 'completed']));
@@ -196,13 +197,13 @@ class TaskController {
             // We found the task
             return response.status(200)
               .json(task);
-          }
+          // }
 
           // The project does not own the task
-          return response.status(403)
-            .json({
-              error: 'Unauthorized operation.'
-            })
+          // return response.status(403)
+          //   .json({
+          //     error: 'Unauthorized operation.'
+          //   })
 
         }
 
@@ -212,20 +213,20 @@ class TaskController {
             error: 'Resource does not exist.'
           });
 
-      }
+      // }
 
       // The user does not own the project
-      return response.status(403)
-        .json({
-          error: 'Unauthorized operation.'
-        })
-    }
+      // return response.status(403)
+      //   .json({
+      //     error: 'Unauthorized operation.'
+      //   })
+    // }
 
     // We didn't find the project
-    return response.status(404)
-      .json({
-        error: 'Resource does not exist.'
-      })
+    // return response.status(404)
+    //   .json({
+    //     error: 'Resource does not exist.'
+    //   })
   }
 
   /**

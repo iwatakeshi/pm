@@ -55,9 +55,14 @@ Route
      Route.get('projects/:project_id/tasks', 'TaskController.index').middleware('auth');
      Route.post('projects/:project_id/tasks', 'TaskController.store').middleware('auth');
      
-     Route.get('projects/:project_id/tasks/:task_id', 'TaskController.show').middleware('auth');
-     Route.patch('projects/:project_id/tasks/:task_id', 'TaskController.update').middleware('auth');
-     Route.delete('projects/:project_id/tasks/:task_id', 'TaskController.destroy').middleware('auth');
+     /**
+      * ==========
+      *   Task
+      * ==========
+      */
+     Route.get('task/:task_id', 'TaskController.show').middleware('auth');
+     Route.patch('task/:task_id', 'TaskController.update').middleware('auth');
+     Route.delete('task/:task_id', 'TaskController.destroy').middleware('auth');
 
   })
   .prefix('api/v1');

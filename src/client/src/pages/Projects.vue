@@ -3,7 +3,9 @@
     <h1>Projects</h1>
     <project-form></project-form>
     <ul>
-      <li v-for="(project, key) in projects" :key="key">{{ project.title }}</li>
+      <li v-for="(project, key) in projects" :key="key">
+        <router-link :to="{ path: '/project/' + project.id }">{{ project.title }}</router-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -19,16 +21,20 @@ export default {
     projects: null
   }),
   beforeMount() {
-    if (!this.$root.auth().isAuthenticated()) {
+    if (!this.auth.isAuthenticated()) {
       console.log('here')
       this.$router.push({ path: '/' })
     }
   },
   async mounted() {
-    this.$root.auth().authenticate();
-    console.log(`Projets - Authenticated: ${this.$root.auth().isAuthenticated()}`)
+    // auth.authenticate();
+    console.log(this.auth)
+    console.log(`Projects - Authenticated: ${this.auth.isAuthenticated()}`)
     const { data } = await axios.get("api/v1/projects/");
     this.projects = data;
+    this.$on('NewProjectSaved', (project) => {
+      this.projects.push(project);
+    });
   }
 };
 </script>

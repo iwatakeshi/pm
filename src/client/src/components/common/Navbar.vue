@@ -9,7 +9,7 @@
     </div>
 
     <div class="navbar-menu">
-      <div class="navbar-start" v-if="this.$root.auth().isAuthenticated()">
+      <div class="navbar-start" v-if="this.auth.isAuthenticated()">
         <router-link class="navbar-item" to="/projects">
           <a>Projects</a>
         </router-link>
@@ -17,7 +17,7 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <template v-if="!this.$root.auth().isAuthenticated()">
+            <template v-if="!this.auth.isAuthenticated()">
               <template v-if="this.$root.path === '/signin'">
                 <router-link class="button is-primary" to="/signup">
                   <strong>Sign up</strong>
@@ -46,8 +46,8 @@ export default {
   },
   methods: {
     signOut() {
-      this.$root.auth().deauthenticate();
-      console.log(`Navbar - Authenticated: ${this.$root.auth().isAuthenticated()}`)
+      this.auth.deauthenticate();
+      console.log(`Navbar - Authenticated: ${this.auth.isAuthenticated()}`)
       window.location.replace('/')
     }
   }

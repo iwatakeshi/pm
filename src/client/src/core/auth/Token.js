@@ -5,7 +5,6 @@ export default class Token {
 
   getToken() {
     const value = localStorage.getItem('token');
-    console.log('get token: ', value)
     // localStorage.getItem will return null if it doesn't exist
     return value === null ? '' : value;
   }

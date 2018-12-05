@@ -8,6 +8,7 @@ class TaskSchema extends Schema {
     this.create('tasks', (table) => {
       table.string('description', 255)
       table.integer('project_id').unsigned().references('id').inTable('projects')
+      table.integer('user_id').unsigned().references('id').inTable('user_id')
       table.boolean('completed').defaultTo(false)
       table.increments()
       table.timestamps()

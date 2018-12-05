@@ -1,9 +1,9 @@
 import Token from './Token';
-import axios from 'axios';
 
 export default class Authenticator {
   constructor(token) {
     this._token = new Token(token);
+    console.log('lalalalalala')
   }
 
   authenticate(token) {
@@ -23,7 +23,6 @@ export default class Authenticator {
   }
 
   deauthenticate() {
-    console.log(this._token.getToken())
     this._token.clearToken();
     delete axios.defaults.headers.common['Authorization'];
   }

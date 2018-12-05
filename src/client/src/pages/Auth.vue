@@ -11,7 +11,7 @@
           </figure>
           <form @submit.prevent="register">
 
-            <div class="field" v-if="this.$root.path === '/signup'">
+            <div class="field" v-if="this.$route.path === '/signup'">
               <div class="control">
                 <input class="input is-large" type="text" placeholder="Username" v-model="form.username">
               </div>
@@ -37,8 +37,8 @@
             <button class="button is-block is-info is-large is-fullwidth">Submit</button>
           </form>
         </div>
-        <p class="has-text-grey" v-if="!this.$root.auth().isAuthenticated()">
-          <router-link v-if="this.$root.path === '/signin'" to="/signup">
+        <p class="has-text-grey" v-if="!this.auth.isAuthenticated()">
+          <router-link v-if="this.$route.path === '/signin'" to="/signup">
             <a>Sign Up</a>&nbsp;·&nbsp;
           </router-link>
 
@@ -71,14 +71,14 @@ export default {
         data: { token }
       } = await axios.post("auth/signup", this.form);
 
-      this.$root.auth().authenticate(token);
+      this.auth.authenticate(token);
     },
     async signin() {
       const {
         data: { token }
       } = await axios.post("auth/signin", this.form);
 
-      this.$root.auth().authenticate(token);
+      this.auth.authenticate(token);
     },
     async register () {
       if (this.$root.path === '/signin') {
