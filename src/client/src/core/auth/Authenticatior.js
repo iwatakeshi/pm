@@ -16,7 +16,7 @@ export default class Authenticator {
 
     axios.defaults.headers.common['Authorization'] = this._token.getToken();
     if (this._token.isEmpty()) {
-      this._token.clearToken();
+      this.deauthenticate();
     }
 
     return this._token.isEmpty();
